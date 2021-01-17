@@ -21,8 +21,12 @@ import java.util.Date;
 public class XmlWriterSingleton extends WriterAbstract {
     private static XmlWriterSingleton writer = null;
     public static final String fileDir = "queue";
-    public static final Float max_fie_size_kb = 1F;
 
+    private Float max_fie_size_kb = 2F;
+
+    public void setMax_fie_size_kb(Float max_fie_size_kb) {
+        this.max_fie_size_kb = max_fie_size_kb;
+    }
 
     private XmlWriterSingleton() throws Exception {
         File dir = new File(fileDir);
@@ -94,11 +98,10 @@ public class XmlWriterSingleton extends WriterAbstract {
                         new StreamResult(new FileOutputStream(xml)));
 
                 float fileSize = xml.length();
-                System.out.println(fileSize / 1024F + " kb");
 
-                if (fileSize / 1024F > max_fie_size_kb) {
+                if (fileSize / 1024F > this.max_fie_size_kb) {
                     xml.delete();
-                    throw new SizeOverflowException("XML file cannot be bigger than " + max_fie_size_kb + " kb");
+                    throw new SizeOverflowException("XML file cannot be bigger than " + this.max_fie_size_kb + " kb");
                 }
 
 

@@ -37,9 +37,16 @@ public class driver {
             cnt++;
         }
 
-        WriterAbstract writer = XmlWriterSingleton.getInstance();
+        WriterAbstract writer = FileWriterSingleton.getInstance();
 
         // Пример полиморфизма когда незная какой выводчик работает, мы пишем наши данные
+        writer.logSmartNums(numContainer);
+
+        writer = XmlWriterSingleton.getInstance();
+        writer.logSmartNums(numContainer);
+
+        // Поменяли максимальный размер файла
+        XmlWriterSingleton.getInstance().setMax_fie_size_kb(1F);
         writer.logSmartNums(numContainer);
 
     }
